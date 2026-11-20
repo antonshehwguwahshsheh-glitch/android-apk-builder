@@ -1,28 +1,30 @@
 package com.example.sampleapp
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
-    private var clickCount = 0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val welcomeText = findViewById<TextView>(R.id.welcomeText)
-        val clickButton = findViewById<Button>(R.id.clickButton)
-        val countText = findViewById<TextView>(R.id.countText)
+        val btnStart = findViewById<Button>(R.id.btnStart)
+        val tvStatus = findViewById<TextView>(R.id.tvStatus)
 
-        clickButton.setOnClickListener {
-            clickCount++
-            countText.text = "Button clicked $clickCount times"
-            
-            if (clickCount % 5 == 0) {
-                Toast.makeText(this, "Wow! You've clicked $clickCount times!", Toast.LENGTH_SHORT).show()
+        btnStart.setOnClickListener {
+            tvStatus.text = "Запуск..."
+            try {
+                val intent = packageManager.getLaunchIntentForPackage("com.axlebolt.standoff2")
+                if (intent != null) {
+                    startActivity(intent)
+                } else {
+                    tvStatus.text = "Игра не установлена."
+                }
+            } catch (e: Exception) {
+                tvStatus.text = "Ошибка: ${e.message}"
             }
         }
     }
