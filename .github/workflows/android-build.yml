@@ -19,3 +19,4 @@ jobs:
       with:
         name: Macaca-Loader-APK
         path: app/build/outputs/apk/debug/app-debug.apk
+
